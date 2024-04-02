@@ -1,0 +1,65 @@
+package com.pavan.rearrangechar;
+
+import java.util.PriorityQueue;
+
+public class RearrangeChars {
+  public String rearrange(String str) throws Exception {
+    final class RO implements Comparable<RO>{
+      int freq;
+      char ch;
+      RO(int freq, char ch){
+        this.freq = freq;
+        this.ch = ch;
+      }
+
+      @Override
+      public int compareTo(RO ro) {
+        return Integer.compare(ro.freq, this.freq);
+      }
+    }
+
+    int n = str.length();
+    int [] freqArray = new int[26];
+    // add freq to array
+    for(char c : str.toCharArray()) {
+      freqArray[c - 'a']++;
+      if(freqArray[c - 'a'] > (n+1)/2) {
+        throw new Exception("More number of duplicates, can not rearrange.");
+      }
+    }
+    PriorityQueue<RO> pq = new PriorityQueue<>();
+    // Add freq to PQ
+    for(int i =0; i < 26; i++){
+      if(freqArray[i] > 0){
+        pq.add(new RO(freqArray[i], (char) (i + 'a')));
+      }
+    }
+
+    // Pop first two elements and add it to the final string
+    StringBuilder sb = new StringBuilder();
+    while(!pq.isEmpty()){
+      RO first = pq.poll();
+      sb.append(first.ch);
+      first.freq--;
+
+      RO second = null;
+      if(!pq.isEmpty()){
+        second = pq.poll();
+        sb.append(second.ch);
+        second.freq--;
+      }
+      if(first.freq > 0){
+        pq.add(first);
+      }
+      if(second != null && second.freq > 0){
+        pq.add(second);
+      }
+    }
+    return sb.toString();
+  }
+
+  public static void main(String[] str) throws Exception {
+    RearrangeChars rearrangeChars = new RearrangeChars();
+    System.out.println(rearrangeChars.rearrange("aaabc"));
+  }
+}
