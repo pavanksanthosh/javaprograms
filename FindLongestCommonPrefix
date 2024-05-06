@@ -1,0 +1,33 @@
+package com.pavan.programs;
+
+public class LongestCommonPrefix {
+
+  public static void main(String[] args){
+    //String[] strs = {"value1", "value2", "value3"};
+    //String[] strs = {"kt", "value2", "value3"};
+    String[] strs = {};
+    LongestCommonPrefix longestCommonPrefix = new LongestCommonPrefix();
+    System.out.println("longest prefix = " + longestCommonPrefix.getLongestCommonPrefix(strs));
+  }
+
+  String getLongestCommonPrefix(String[] strs) {
+    if(strs == null || strs.length == 0) {
+      return "";
+    }
+    for (int i = 0; ; i++) {
+      Character currentChar = null;
+      for (String str : strs) {
+        if (str.length() <= i) {
+          return str.substring(0, i);
+        }
+        if(currentChar == null){
+          currentChar = str.charAt(i);
+        }
+        if (currentChar != str.charAt(i)) {
+          return str.substring(0, i);
+        }
+      }
+    }
+  }
+
+}
