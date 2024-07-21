@@ -1,0 +1,60 @@
+/*
+Given a string s, return the longest
+palindromic
+
+substring
+ in s.
+
+
+
+Example 1:
+
+Input: s = "babaddfggdb"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+Example 2:
+
+Input: s = "cbbd"
+Output: "bb"
+*/
+package com.pavan.programs;
+
+import java.util.Comparator;
+import java.util.stream.Stream;
+
+public class LongestPalindromeSubstring2 {
+
+  public String longestPalindrome(String s) {
+    String longestPalindrom = "";
+    for(int index=0; index < s.length(); index++) {
+      String pal1 = this.palindrome(s, index, index);
+      String pal2 = this.palindrome(s, index, index+1);
+      if(longestPalindrom.length() < pal1.length()){
+        longestPalindrom = pal1;
+      }
+      if(longestPalindrom.length() < pal2.length()){
+        longestPalindrom = pal2;
+      }
+    }
+    return longestPalindrom;
+  }
+
+  private String palindrome(String s, int left, int right){
+    if(left > right && left > 0 && right < s.length() && s.charAt(left) != s.charAt(right)) {
+      return "";
+    }
+    String palindrome = "";
+    while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+      palindrome = s.substring(left, right+1);
+      left--;
+      right++;
+    }
+
+    return palindrome;
+  }
+
+  public static void main(String[] args) {
+    LongestPalindromeSubstring2 longestPalindromeSubstring = new LongestPalindromeSubstring2();
+    System.out.println(longestPalindromeSubstring.longestPalindrome("babaddfddb"));
+  }
+}
