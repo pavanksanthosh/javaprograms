@@ -1,0 +1,29 @@
+/*
+Find the Area between two bars, but there shouldn't be any bigger bars in between.
+*/
+
+package com.pavan.programs;
+
+public class BigRealContainer {
+  public int maxArea(int[] height) {
+
+
+    int maxArea =0;
+
+    for(int hpointer=0; hpointer < height.length-1; hpointer++) {
+      for(int rpointer=hpointer+1; rpointer < height.length; rpointer++) {
+        maxArea = Math.max(maxArea, Math.min(height[hpointer], height[rpointer]) * (rpointer - hpointer));
+        if(height[hpointer] <= height[rpointer]) {
+          break;
+        }
+      }
+    }
+    return maxArea;
+  }
+
+  public static void main(String[] args) {
+    int[] heights = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+    BigRealContainer bigContainer = new BigRealContainer();
+    System.out.println("Max Area: " + bigContainer.maxArea(heights));
+  }
+}
